@@ -13,3 +13,5 @@ Requirements to run this code:
 1. On cmd go to the path where you saved/downloaded the code folder. 
 2. Then type python manage.py runserver
 3. Go on browser and type http://127.0.0.1:8000 you will find a working website.
+# For login purpose
+There should be the database added to your mySQL Workbench. And in the settings.py change the database settings according to yours.
