@@ -45,6 +45,7 @@ urlpatterns = [
     path('addbook.html',views.bookadd,name="addbook_url"),
     path('addloan.html',views.loanadd,name="addloan_url"),
     path('lendbook.html',views.lend,name="uloan_url"),
+    path('slend.html',views.slend,name="sloan_url"),
     path('addstaff.html',views.staffadd,name="addstaff_url"),
     path('addpub.html',views.pubadd,name="addpub_url"),
     path('hi/',views.emailsend,name="email"),
