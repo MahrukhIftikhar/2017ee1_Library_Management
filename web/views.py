@@ -259,7 +259,26 @@ def lend(request):
             messages.success(request,"The person "+saverec.SSN+ "has lended the book "+saverec.ISNB+" Successfully...!!!")
             return render(request,"lendbook.html")
     else:
-        return render(request,"lendbook.html")  
+        return render(request,"lendbook.html") 
+def slend(request):
+    if request.method=="POST":
+        if request.POST.get('SSN') and request.POST.get('ISNB') and request.POST.get('issue_date') and request.POST.get('return_date'):
+            saverec = loansDetails()
+            saverec.SSN = request.POST.get('SSN')
+            saverec.ISNB = request.POST.get('ISNB')
+            saverec.issue_date = request.POST.get('issue_date')
+            saverec.return_date = request.POST.get('return_date')
+            userverify = BookDetails.objects.get(ISNB = request.POST['ISNB'])
+            if userverify.status=="booked":
+                messages.success(request,'You cannot lend this book as it is already occupied')
+                return render(request,'slend.html')
+            saverec.fine = str(userverify.price)
+            cursor = connection.cursor()
+            cursor.execute("call addloan('"+saverec.SSN+"','"+saverec.ISNB+"','"+saverec.issue_date+"','"+saverec.return_date+"','"+saverec.fine+"')")
+            messages.success(request,"The person "+saverec.SSN+ "has lended the book "+saverec.ISNB+" Successfully...!!!")
+            return render(request,"slend.html")
+    else:
+        return render(request,"slend.html")     
 def staffadd(request):
     if request.method=="POST":
         if request.POST.get('SSN') and request.POST.get('F_name') and request.POST.get('L_name') and request.POST.get('Address') and request.POST.get('salary') and request.POST.get('specified_task'):
